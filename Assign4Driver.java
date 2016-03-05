@@ -44,10 +44,11 @@ public class Assign4Driver
     						wordLadderSolver.isInDictionary(s[1])){
     					// If both words in a pair appear in the dictionary, compute
     					// word ladder for pair.
-    					ArrayList<String> result = wordLadderSolver.computeLadder(s[0],
+    					List<String> result = wordLadderSolver.computeLadder(s[0],
     							s[1]);
     					boolean correct = wordLadderSolver.validateResult(s[0],
     							s[1], result);
+						System.out.println("**********");
     					if(correct){
     						System.out.println("For the input words “s[0]” and “s[1]”"
     								+ " the following word ladder was found");
@@ -56,6 +57,11 @@ public class Assign4Driver
     						System.out.println("There is no word ladder between " + s[0]
     								+ " and " + s[1] + "!");
     					}
+						System.out.println("**********");
+    				} else{
+    					System.err.println("At least one of the words " + s[0]
+    							+ " and " + s[1] +" are not legitimate 5-letter"
+    									+ " words from the dictionary.");
     				}
     			}
     		}

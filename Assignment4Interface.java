@@ -1,6 +1,7 @@
 package assignment4;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface Assignment4Interface
 {
@@ -21,7 +22,7 @@ public interface Assignment4Interface
      * be different by exactly one letter.
      * @throws NoSuchLadderException is thrown if no word ladder can be generated from startWord and endWord.
      */
-    ArrayList<String> computeLadder(String startWord, String endWord) throws NoSuchLadderException;
+    List<String> computeLadder(String startWord, String endWord) throws NoSuchLadderException;
 
     /**
      * Determines whether or not a word ladder is valid. NOTE: this method is NOT part of the requirements
@@ -33,8 +34,8 @@ public interface Assignment4Interface
      * @param endWord The ending word in the word ladder.
      * @param wordLadder The wordLadder to check if the solution is valid
      * @return True if the word ladder is correct, false otherwise.
-     */
-    boolean validateResult(String startWord, String endWord, ArrayList<String> wordLadder);
+     */    
+    boolean validateResult(String startWord, String endWord, List<String> wordLadder);
     
     /**
      * Creates a HashMap structure that will act as a dictionary for word
@@ -53,5 +54,5 @@ public interface Assignment4Interface
      * Prints out a successfully-formed word ladder.
      * @param ladder A computed word ladder.
      */
-    public void printWordLadder(ArrayList<String> ladder);
+    public void printWordLadder(List<String> ladder);
 }
