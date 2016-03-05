@@ -17,20 +17,48 @@ public class Assign4Driver
         // Create a word ladder solver object
         Assignment4Interface wordLadderSolver = new WordLadderSolver();
         
-		if (args.length != 1) 
+		if (args.length != 2) 
 		{
 			System.err.println ("Error: Incorrect number of command line arguments");
 			System.exit(-1);
 		}
-		// Populate dictionary. Assumes args[0] is filename of dictionary.dat
-		ArrayList<String> dictionary = processLinesInFile (args[0],
-				"Create Dictionary");
-		wordLadderSolver.setDictionary(dictionary);
 
         try 
         {
-            List<String> result = wordLadderSolver.computeLadder("money", "honey");
-            boolean correct = wordLadderSolver.validateResult("money", "honey", result);
+    		// Populate dictionary. Assumes args[0] is filename of dictionary.dat
+    		ArrayList<String> dictionary = processLinesInFile (args[0],
+    				"Create Dictionary");
+    		wordLadderSolver.setDictionary(dictionary);
+    		
+    		// Find pairs of start and ending words for word ladder computation.
+    		// Will vet each pair to see if the entries are valid dictionary words b4
+    		// attempting to compute word ladder.
+    		ArrayList<String> pairs = processLinesInFile (args[1], "Find Pairs");
+    		
+    		Iterator<String> i = pairs.iterator(); // Iterate through all pairs.
+    		while(i.hasNext()){
+    			String temp = i.next();
+    			String[] s = temp.split("\\s+"); // Split pairs by multi-space delim.
+    			if(s.length == 2){ // If there are two arguments, proceed.
+    				if(wordLadderSolver.isInDictionary(s[0]) &&
+    						wordLadderSolver.isInDictionary(s[1])){
+    					// If both words in a pair appear in the dictionary, compute
+    					// word ladder for pair.
+    					ArrayList<String> result = wordLadderSolver.computeLadder(s[0],
+    							s[1]);
+    					boolean correct = wordLadderSolver.validateResult(s[0],
+    							s[1], result);
+    					if(correct){
+    						System.out.println("For the input words “s[0]” and “s[1]”"
+    								+ " the following word ladder was found");
+    						wordLadderSolver.printWordLadder(result);
+    					} else{
+    						System.out.println("There is no word ladder between " + s[0]
+    								+ " and " + s[1] + "!");
+    					}
+    				}
+    			}
+    		}
         } 
         catch (NoSuchLadderException e) 
         {
@@ -52,6 +80,7 @@ public class Assign4Driver
 			FileReader freader = new FileReader(filename);
 			BufferedReader reader = new BufferedReader(freader);
 			ArrayList<String> dictionaryWords = new ArrayList<String>();
+			ArrayList<String> pairs = new ArrayList<String>();
 			
 			// For creating dictionary.
 			if(op.equals("Create Dictionary")){
@@ -63,8 +92,14 @@ public class Assign4Driver
 					}
 				}
 				return dictionaryWords;
-			// For creating word ladders.
-			} else()
+			// For finding word ladder pairs.
+			} else{
+				for (String s = reader.readLine(); s != null; s = reader.readLine()) 
+				{
+					pairs.add(s);
+				}
+				return pairs;
+			}
 			
 		} 
 		catch (FileNotFoundException e) 
@@ -78,6 +113,7 @@ public class Assign4Driver
 			e.printStackTrace();
 			System.exit(-1);
 		}
+		return null;
 	}    
     
 	/* isValidChar()

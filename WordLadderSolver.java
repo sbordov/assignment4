@@ -7,7 +7,6 @@ package assignment4;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 // do not change class name or interface it implements
 public class WordLadderSolver implements Assignment4Interface
@@ -22,14 +21,14 @@ public class WordLadderSolver implements Assignment4Interface
 
     // do not change signature of the method implemented from the interface
     @Override
-    public List<String> computeLadder(String startWord, String endWord) throws NoSuchLadderException 
+    public ArrayList<String> computeLadder(String startWord, String endWord) throws NoSuchLadderException 
     {
         // implement this method
         throw new UnsupportedOperationException("Not implemented yet!");
     }
 
     @Override
-    public boolean validateResult(String startWord, String endWord, List<String> wordLadder) 
+    public boolean validateResult(String startWord, String endWord, ArrayList<String> wordLadder) 
     {
         throw new UnsupportedOperationException("Not implemented yet!");
     }
@@ -45,10 +44,18 @@ public class WordLadderSolver implements Assignment4Interface
     
     public boolean isInDictionary(String word){
     	String temp = dictionary.get(word);
-    	if(word.equals(temp)){
+    	if(word.equalsIgnoreCase(temp)){
     		return true;
     	} else{
     		return false;
     	}
+    }
+    
+    public void printWordLadder(ArrayList<String> ladder){
+			Iterator<String> it = ladder.iterator();
+			while(it.hasNext()){
+				String temp = it.next();
+				System.out.println(temp);
+			}
     }
 }
