@@ -1,5 +1,6 @@
 package assignment4;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Assignment4Interface
@@ -35,4 +36,17 @@ public interface Assignment4Interface
      * @return True if the word ladder is correct, false otherwise.
      */
     boolean validateResult(String startWord, String endWord, List<String> wordLadder);
+    
+    /**
+     * Creates a HashMap structure that will act as a dictionary for word
+     * checks.
+     * @param words An ArrayList of words to add to the given dictionary.
+     */
+    public void setDictionary(ArrayList<String> words);
+    
+    /**
+     * Checks dictionary HashMap for occurrence of word.
+     * @param word A String to search for in dictionary.
+     */
+    public boolean isInDictionary(String word);
 }
