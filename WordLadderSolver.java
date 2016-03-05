@@ -184,21 +184,21 @@ public class WordLadderSolver implements Assignment4Interface
     }
    
    // Override binarySearch to return the index at which a new item should be inserted to
- // maintain alpha order.
+    // maintain alpha order.
  	public static int binarySearch(List<String> possibles, String word){
 		int low = 0;
 	    int high = possibles.size() - 1;
  	    while (low <= high) {
- 	    int mid = (low + high) / 2;
-         String midWord = possibles.get(mid);
- 		        int cmp = midWord.compareTo(word);
- 		        if (cmp < 0)
- 		            low = mid + 1;
- 		        else if (cmp > 0)
- 		            high = mid - 1;
- 		        else
- 		            return mid;
- 		    }
- 		    return low;
+ 	    	int mid = (low + high) / 2;
+ 	    	String midWord = possibles.get(mid);
+ 		    int cmp = midWord.compareTo(word);
+ 		    if (cmp < 0)
+ 		        low = mid + 1;
+ 		    else if (cmp > 0)
+ 		        high = mid - 1;
+ 		    else
+ 		        return mid;
  		}
+ 		return low;
+ 	}
 }
