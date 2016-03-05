@@ -75,12 +75,21 @@ public class WordLadderSolver implements Assignment4Interface
         	}
         }
         Iterator<String> it = possibles.iterator();
+        boolean route = false;
         while(it.hasNext()){
         	String temp = it.next();
         	int change = Integer.parseInt(temp.substring(1, 2));
-        	result.add(temp);
-        	makeLadder(temp.substring(2), endWord, change, result);
+        	solutions.add(temp);
+        	result = makeLadder(temp.substring(2), endWord, change, solutions);
+        	if(result != null){
+        		route = true;
+        		return result;
+        	}
         }
+        if(!route){
+        	solutions.remove(solutions.size()-1);
+        }
+        return null;
     }
     
     public List<String> makeLadder(String startWord, String endWord, int changeIndex, List<String> result){
@@ -97,6 +106,7 @@ public class WordLadderSolver implements Assignment4Interface
         
         String letters = "abcdefghijklmnopqrstuvwxyz";
         List<String> possibles = new ArrayList<String>();
+        List<String> solutions = new ArrayList<String>();
         for(int x = 0; x < 5; x++){
         	char check = startWord.charAt(x);
         	for(int y = 0; y < 26; y++){
@@ -112,13 +122,29 @@ public class WordLadderSolver implements Assignment4Interface
         				test += startWord.charAt(loop);
         			}
         			if(isInDictionary(test)){
-        				test = Integer.toString(numDifferentChars(test, endWord)) + test;
+        				test = Integer.toString(numDifferentChars(test, endWord)) + Integer.toString(x) + test;
         				int index = binarySearch(possibles, test);
         				possibles.add(index, test);
         			}
         		}
         	}
         }
+        Iterator<String> it = possibles.iterator();
+        boolean route = false;
+        while(it.hasNext()){
+        	String temp = it.next();
+        	int change = Integer.parseInt(temp.substring(1, 2));
+        	solutions.add(temp);
+        	result = makeLadder(temp.substring(2), endWord, change, solutions);
+        	if(result != null){
+        		route = true;
+        		return result;
+        	}
+        }
+        if(!route){
+        	solutions.remove(solutions.size()-1);
+        }
+        return null;
     }
     
     
