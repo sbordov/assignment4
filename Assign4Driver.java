@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import Assignment1.Translator;
-
 public class Assign4Driver
 {
     public static void main(String[] args)
@@ -46,12 +44,16 @@ public class Assign4Driver
     					// word ladder for pair.
     					List<String> result = wordLadderSolver.computeLadder(s[0],
     							s[1]);
-    					boolean correct = wordLadderSolver.validateResult(s[0],
-    							s[1], result);
+    					boolean correct = true;
+    					if(result == null){
+    						correct = false;
+    					}
+    					//boolean correct = wordLadderSolver.validateResult(s[0],
+    					//		s[1], result);
 						System.out.println("**********");
     					if(correct){
-    						System.out.println("For the input words “s[0]” and “s[1]”"
-    								+ " the following word ladder was found");
+    						System.out.println("For the input words " + s[0] + " and "
+    								+ s[1] + " the following word ladder was found");
     						wordLadderSolver.printWordLadder(result);
     					} else{
     						System.out.println("There is no word ladder between " + s[0]
