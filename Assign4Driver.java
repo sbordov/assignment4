@@ -92,9 +92,11 @@ public class Assign4Driver
 			if(op.equals("Create Dictionary")){
 				for (String s = reader.readLine(); s != null; s = reader.readLine()) 
 				{
-					String word = s;
-					if(isValidWord(word)){
-						dictionaryWords.add(word);
+					if(s.length() >= 5){
+						String word = s.substring(0, 5);
+						if(isValidWord(word)){
+							dictionaryWords.add(word);
+						}
 					}
 				}
 				return dictionaryWords;
