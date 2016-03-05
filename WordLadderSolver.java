@@ -36,10 +36,9 @@ public class WordLadderSolver implements Assignment4Interface
     }
 
     // add additional methods here
-    public List<String> makeLadder(String startWord, String endWord,
-    		int changeIndex){
+    public List<String> makeLadder(String startWord, String endWord, int changeIndex){
     	List<String> result = new ArrayList<String>();
-    	if(startWord.equals(endWord)){
+    	if(startWord.equals(endWord)){		// start word = end word
     		result.add(startWord);
     		result.add(endWord);
     		return result;
@@ -49,7 +48,79 @@ public class WordLadderSolver implements Assignment4Interface
         	result.add(endWord);
         	return result;
         }
+        
+        String letters = "abcdefghijklmnopqrstuvwxyz";
+        List<String> possibles = new ArrayList<String>();
+        List<String> solutions = new ArrayList<String>();
+        for(int x = 0; x < 5; x++){
+        	char check = startWord.charAt(x);
+        	for(int y = 0; y < 26; y++){
+        		if(check != letters.charAt(y)){
+        			int loop = 0;
+        			String test = "";
+        			while(loop != x){
+        				test += startWord.charAt(loop);
+        				loop++;
+        			}
+        			test += letters.charAt(y);
+        			while(loop < 5){
+        				test += startWord.charAt(loop);
+        			}
+        			if(isInDictionary(test)){
+        				test = Integer.toString(numDifferentChars(test, endWord)) + Integer.toString(x) + test;
+        				int index = binarySearch(possibles, test);
+        				possibles.add(index, test);
+        			}
+        		}
+        	}
+        }
+        Iterator<String> it = possibles.iterator();
+        while(it.hasNext()){
+        	String temp = it.next();
+        	int change = Integer.parseInt(temp.substring(1, 2));
+        	result.add(temp);
+        	makeLadder(temp.substring(2), endWord, change, result);
+        }
     }
+    
+    public List<String> makeLadder(String startWord, String endWord, int changeIndex, List<String> result){
+    	if(startWord.equals(endWord)){		// start word = end word
+    		result.add(startWord);
+    		result.add(endWord);
+    		return result;
+    	}
+        if(numDifferentChars(startWord, endWord) == 1){
+        	result.add(startWord);
+        	result.add(endWord);
+        	return result;
+        }
+        
+        String letters = "abcdefghijklmnopqrstuvwxyz";
+        List<String> possibles = new ArrayList<String>();
+        for(int x = 0; x < 5; x++){
+        	char check = startWord.charAt(x);
+        	for(int y = 0; y < 26; y++){
+        		if(check != letters.charAt(y)){
+        			int loop = 0;
+        			String test = "";
+        			while(loop != x){
+        				test += startWord.charAt(loop);
+        				loop++;
+        			}
+        			test += letters.charAt(y);
+        			while(loop < 5){
+        				test += startWord.charAt(loop);
+        			}
+        			if(isInDictionary(test)){
+        				test = Integer.toString(numDifferentChars(test, endWord)) + test;
+        				int index = binarySearch(possibles, test);
+        				possibles.add(index, test);
+        			}
+        		}
+        	}
+        }
+    }
+    
     
     public void setDictionary(ArrayList<String> words){
     	Iterator<String> i = words.iterator();
