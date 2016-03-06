@@ -13,7 +13,11 @@ import java.util.Iterator;
 public class WordLadderSolver implements Assignment4Interface
 {
     // declare class members here.
+	// Dictionary lets us search for valid 5-letter words in constant time.
 	public HashMap<String, String> dictionary;
+	
+	// Maintaining a solutions HashMap lets us check for existence of solution
+	// in constant time rather than O(n^2) time.
 	public HashMap<String, String> solutions;
 
     // add a constructor for this object. HINT: it would be a good idea to set up the dictionary there
@@ -55,54 +59,65 @@ public class WordLadderSolver implements Assignment4Interface
         
         String letters = "abcdefghijklmnopqrstuvwxyz";
         List<String> possibles = new ArrayList<String>();
-        for(int x = 0; x < 5; x++){
-        	if(x == changeIndex){
-        		x++;
-        		if(x == 5){
+        // Initial for loop used to change single letters of old word to make new
+        // words for recursive branching.
+        for(int wordIndex = 0; wordIndex < 5; wordIndex++){
+        	if(wordIndex == changeIndex){
+        		// If wordIndex = changeIndex, that letter was just changed. Shouldn't
+        		// be changed this time.
+        		wordIndex++;
+        		if(wordIndex == 5){ // Don't iterate beyond 5 letter limit.
         			break;
         		}
         	}
-        	char check = startWord.charAt(x);
-        	for(int y = 0; y < letters.length(); y++){
-        		if(check != letters.charAt(y)){
-        			int loop = 0;
+        	char check = startWord.charAt(wordIndex);
+        	for(int alphaIndex = 0; alphaIndex < letters.length(); alphaIndex++){
+        		if(check != letters.charAt(alphaIndex)){ // Ensures we make new word.
+        			int buildIndex = 0; // Index of new word to be made via concatenation.
         			String test = "";
-        			while(loop != x){
-        				test += startWord.charAt(loop);
-        				loop++;
+        			while(buildIndex != wordIndex){ // WordIndex is position of char to change.
+        				test += startWord.charAt(buildIndex); // Add letters of old word to test.
+        				buildIndex++;
         			}
-        			test += letters.charAt(y);
-        			loop++;
-        			while(loop < 5){
-        				test += startWord.charAt(loop);
-        				loop++;
+        			test += letters.charAt(alphaIndex); // Add new letter to test.
+        			buildIndex++;
+        			while(buildIndex < 5){ // Add rest of letters fr/ old word.
+        				test += startWord.charAt(buildIndex);
+        				buildIndex++;
         			}
         			if(isInDictionary(test)){
-        				test = Integer.toString(numDifferentChars(test, endWord)) + Integer.toString(x) + test;
+        				// Append number of differences between test and end word as well as
+        				// the most recently-changed letter index of test to beginning of test.
+        				test = Integer.toString(numDifferentChars(test, endWord))
+        						+ Integer.toString(wordIndex) + test;
         				int index = binarySearch(possibles, test);
-        				possibles.add(index, test);
+        				possibles.add(index, test); // Add test to list of potential words for branching.
         			}
         		}
         	}
         }
         Iterator<String> it = possibles.iterator();
-        boolean route = false;
         String temp;
+        // Run through all valid words and branch for words not appearing in Dictionary.
         while(it.hasNext()){
         	temp = it.next();
+        	// Pull index of change from second position of String fr/ possibles.
         	int change = Integer.parseInt(temp.substring(1, 2));
+        	// Take String without its appended digits.
         	temp = temp.substring(2);
-        	if(!isSolution(temp)){
-        		solutions.add(temp);
-        		addSolution(temp);
+        	if(!isSolution(temp)){ // If temp doesn't appear in solutions list, try it.
+        		solutions.add(temp); // Add to solutions ArrayList.
+        		addSolution(temp); // Add to solutions HashMap.
+        		// Recursive call with changed word.
             	result = makeLadder(temp, endWord, change, solutions);
             	if(result != null){
-            		route = true;
+            		// Null will cascade down branch.
             		return result;
             	}
         	}
 
         }
+        // If a branch doesn't reach a solution, returns null.
         return null;
     }
     

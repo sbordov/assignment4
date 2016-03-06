@@ -32,6 +32,9 @@ public class Assign4Driver
     		// Will vet each pair to see if the entries are valid dictionary words b4
     		// attempting to compute word ladder.
     		ArrayList<String> pairs = processLinesInFile (args[1], "Find Pairs");
+    		if(pairs.size() == 0){
+    			System.err.println("No pairs of words were given for making word ladders.");
+    		}
     		
     		Iterator<String> i = pairs.iterator(); // Iterate through all pairs.
     		while(i.hasNext()){
