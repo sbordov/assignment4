@@ -1,5 +1,6 @@
-/*
-    ADD YOUR HEADER HERE
+/*  Assignment 4: Word Ladder
+ *  Name: Rikin Tanna, Stefan Bordovsky
+ *  UTEID: rrt575, sb39782
  */
 
 package assignment4;
