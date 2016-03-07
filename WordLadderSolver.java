@@ -103,7 +103,7 @@ public class WordLadderSolver implements Assignment4Interface
         				test += startWord.charAt(buildIndex);
         				buildIndex++;
         			}
-        			if(isInDictionary(test)){
+        			if(isInDictionary(test) && (numDifferentChars(startWord,test) == 1)){
         				// Append number of differences between test and end word as well as
         				// the most recently-changed letter index of test to beginning of test.
         				test = Integer.toString(numDifferentChars(test, endWord))
