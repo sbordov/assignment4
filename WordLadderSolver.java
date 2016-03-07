@@ -131,6 +131,8 @@ public class WordLadderSolver implements Assignment4Interface
             	if(result != null){
             		// Null will cascade down branch.
             		return result;
+            	} else {
+            		solutions.remove(temp);
             	}
         	}
 

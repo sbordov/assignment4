@@ -56,11 +56,11 @@ public class Assign4Driver
     						System.out.println("For the input words " + s[0] + " and "
     								+ s[1] + " the following word ladder was found");
     						wordLadderSolver.printWordLadder(result);
+        					System.out.println("**********");
     					} else{
     						throw new NoSuchLadderException("There is no word ladder between " + s[0]
     								+ " and " + s[1] + "!");
     					}
-    					System.out.println("**********");
     				} else{
     					System.err.println("At least one of the words " + s[0]
     							+ " and " + s[1] +" are not legitimate 5-letter"
