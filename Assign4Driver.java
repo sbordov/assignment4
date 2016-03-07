@@ -41,7 +41,7 @@ public class Assign4Driver
     	while(i.hasNext()){
     		String temp = i.next();
     		String[] s = temp.split("\\s+"); // Split pairs by multi-space delim.
-    		try{
+    		try{ // Look for NoSuchLadderException.
     			if(s.length == 2){ // If there are two arguments, proceed.
     				if(wordLadderSolver.isInDictionary(s[0]) &&
     						wordLadderSolver.isInDictionary(s[1])){
@@ -70,6 +70,7 @@ public class Assign4Driver
     		}
     		catch(NoSuchLadderException e){
     			e.printStackTrace();
+				System.out.println("**********");
     		}
     	}
     }

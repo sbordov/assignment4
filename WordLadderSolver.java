@@ -52,7 +52,7 @@ public class WordLadderSolver implements Assignment4Interface
     	// check to see if each word is one letter different than next
     	if(wordLadder.size() > 1){
     		for(int x = 0; x < wordLadder.size() - 1; x++){
-    			if(numDifferentChars(wordLadder.get(x), wordLadder.get(x+1)) != 1){
+    			if(numDifferentChars(wordLadder.get(x), wordLadder.get(x+1)) > 1){
     				return false;
     			}
     		}
@@ -63,7 +63,8 @@ public class WordLadderSolver implements Assignment4Interface
 
 
     // add additional methods here
-    public List<String> makeLadder(String startWord, String endWord, int changeIndex, List<String> solutions){
+    public List<String> makeLadder(String startWord, String endWord,
+    		int changeIndex, List<String> solutions){
     	List<String> result = new ArrayList<String>();
     	if(startWord.equals(endWord)){		// start word = end word
     		solutions.add(endWord);
