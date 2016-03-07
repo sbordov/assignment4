@@ -39,12 +39,26 @@ public class WordLadderSolver implements Assignment4Interface
     	return result;
         //throw new UnsupportedOperationException("Not implemented yet!");
     }
-
+    
     @Override
     public boolean validateResult(String startWord, String endWord, List<String> wordLadder) 
-    {
-        throw new UnsupportedOperationException("Not implemented yet!");
+    {	
+    	// return false if word ladder is empty, start word is not the first word, or end word is not the last word
+    	if(wordLadder.isEmpty() || !startWord.equals(wordLadder.get(0)) || !endWord.equals(wordLadder.get(wordLadder.size() - 1))){
+    		return false;
+    	}
+    	// check to see if each word is one letter different than next
+    	if(wordLadder.size() > 1){
+    		for(int x = 0; x < wordLadder.size(); x++){
+    			if(numDifferentChars(wordLadder.get(x), wordLadder.get(x+1)) != 1){
+    				return false;
+    			}
+    		}
+    	}
+    	
+    	return true;
     }
+
 
     // add additional methods here
     public List<String> makeLadder(String startWord, String endWord, int changeIndex, List<String> solutions){
