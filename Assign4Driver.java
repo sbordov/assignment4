@@ -21,25 +21,27 @@ public class Assign4Driver
 			System.exit(-1);
 		}
 
-        try 
-        {
-    		// Populate dictionary. Assumes args[0] is filename of dictionary.dat
-    		ArrayList<String> dictionary = processLinesInFile (args[0],
-    				"Create Dictionary");
-    		wordLadderSolver.setDictionary(dictionary);
+       // try 
+        //{
+    	// Populate dictionary. Assumes args[0] is filename of dictionary.dat
+    	ArrayList<String> dictionary = processLinesInFile (args[0],
+    			"Create Dictionary");
+    	wordLadderSolver.setDictionary(dictionary);
+    	
+    	// Find pairs of start and ending words for word ladder computation.
+    	// Will vet each pair to see if the entries are valid dictionary words b4
+    	// attempting to compute word ladder.
+    	ArrayList<String> pairs = processLinesInFile (args[1], "Find Pairs");
+    	if(pairs.size() == 0){
+    		System.err.println("No pairs of words were given for making word ladders.");
+    	}
     		
-    		// Find pairs of start and ending words for word ladder computation.
-    		// Will vet each pair to see if the entries are valid dictionary words b4
-    		// attempting to compute word ladder.
-    		ArrayList<String> pairs = processLinesInFile (args[1], "Find Pairs");
-    		if(pairs.size() == 0){
-    			System.err.println("No pairs of words were given for making word ladders.");
-    		}
-    		
-    		Iterator<String> i = pairs.iterator(); // Iterate through all pairs.
-    		while(i.hasNext()){
-    			String temp = i.next();
-    			String[] s = temp.split("\\s+"); // Split pairs by multi-space delim.
+    	boolean correct = true; // Will indicate if valid word ladder.
+    	Iterator<String> i = pairs.iterator(); // Iterate through all pairs.
+    	while(i.hasNext()){
+    		String temp = i.next();
+    		String[] s = temp.split("\\s+"); // Split pairs by multi-space delim.
+    		try{
     			if(s.length == 2){ // If there are two arguments, proceed.
     				if(wordLadderSolver.isInDictionary(s[0]) &&
     						wordLadderSolver.isInDictionary(s[1])){
@@ -47,34 +49,29 @@ public class Assign4Driver
     					// word ladder for pair.
     					List<String> result = wordLadderSolver.computeLadder(s[0],
     							s[1]);
-    					boolean correct = true;
-    					if(result == null){
-    						correct = false;
-    					}
     					correct = wordLadderSolver.validateResult(s[0],
     							s[1], result);
-						System.out.println("**********");
+    					System.out.println("**********");
     					if(correct){
     						System.out.println("For the input words " + s[0] + " and "
     								+ s[1] + " the following word ladder was found");
     						wordLadderSolver.printWordLadder(result);
     					} else{
-    						System.out.println("There is no word ladder between " + s[0]
+    						throw new NoSuchLadderException("There is no word ladder between " + s[0]
     								+ " and " + s[1] + "!");
     					}
-						System.out.println("**********");
+    					System.out.println("**********");
     				} else{
     					System.err.println("At least one of the words " + s[0]
     							+ " and " + s[1] +" are not legitimate 5-letter"
-    									+ " words from the dictionary.");
+    							+ " words from the dictionary.");
     				}
     			}
     		}
-        } 
-        catch (NoSuchLadderException e) 
-        {
-            e.printStackTrace();
-        }
+    		catch(NoSuchLadderException e){
+    			e.printStackTrace();
+    		}
+    	}
     }
     
 	/******************************************************************************
