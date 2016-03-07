@@ -44,12 +44,14 @@ public class WordLadderSolver implements Assignment4Interface
     public boolean validateResult(String startWord, String endWord, List<String> wordLadder) 
     {	
     	// return false if word ladder is empty, start word is not the first word, or end word is not the last word
-    	if(wordLadder.isEmpty() || !startWord.equals(wordLadder.get(0)) || !endWord.equals(wordLadder.get(wordLadder.size() - 1))){
+    	if((wordLadder == null) ||wordLadder.isEmpty()
+    			|| !startWord.equals(wordLadder.get(0)) 
+    			|| !endWord.equals(wordLadder.get(wordLadder.size() - 1))){
     		return false;
     	}
     	// check to see if each word is one letter different than next
     	if(wordLadder.size() > 1){
-    		for(int x = 0; x < wordLadder.size(); x++){
+    		for(int x = 0; x < wordLadder.size() - 1; x++){
     			if(numDifferentChars(wordLadder.get(x), wordLadder.get(x+1)) != 1){
     				return false;
     			}

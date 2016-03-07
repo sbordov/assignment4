@@ -51,8 +51,8 @@ public class Assign4Driver
     					if(result == null){
     						correct = false;
     					}
-    					//boolean correct = wordLadderSolver.validateResult(s[0],
-    					//		s[1], result);
+    					correct = wordLadderSolver.validateResult(s[0],
+    							s[1], result);
 						System.out.println("**********");
     					if(correct){
     						System.out.println("For the input words " + s[0] + " and "
